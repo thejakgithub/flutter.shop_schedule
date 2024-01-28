@@ -10,14 +10,9 @@ import 'package:shop_schedule/widgets/base_app_bar.dart';
 import 'package:shop_schedule/widgets/base_text.dart';
 import 'package:shop_schedule/widgets/covert_open_time_text.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   String getActiveSchedule(ShopSchedule data) {
     if (data.status.toString() == "1") {
       return "เปิด";
@@ -79,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _cardScheduleInfo(ShopSchedule data) {
+  Widget _cardScheduleInfo(ShopSchedule data, BuildContext context) {
     return Column(
       children: [
         Padding(
@@ -149,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: Consumer<ShopProvider>(builder: (context, shop, child) {
-        return _cardScheduleInfo(shop.schedule);
+        return _cardScheduleInfo(shop.schedule, context);
       }),
     );
   }

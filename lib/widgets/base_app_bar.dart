@@ -60,6 +60,7 @@ class BaseAppBar extends StatelessWidget {
           text: titleText,
           color: titleColor,
           fontSize: 18,
+          maxLines: 2,
           fontWeight: FontWeight.bold,
         ),
         leading: isBack
