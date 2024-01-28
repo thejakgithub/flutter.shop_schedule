@@ -20,10 +20,9 @@ class MyApp extends StatelessWidget {
             create: (context) => ShopProvider()),
       ],
       child: MaterialApp.router(
-        title: 'Shop Shedule',
+        title: 'Shop Schedule',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: AppConstant.redColor),
-          fontFamily: 'notosansthai',
           useMaterial3: true,
         ),
         routeInformationProvider: router.routeInformationProvider,

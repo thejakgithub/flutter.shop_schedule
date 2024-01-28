@@ -1,3 +1,4 @@
 class Images {
-  static const String bg = 'assets/images/bg_onboard.jpg';
+  static const String icTime = 'assets/icons/ic_time.jpg';
+  static const String icNext = 'assets/icons/ic_next.jpg';
 }
