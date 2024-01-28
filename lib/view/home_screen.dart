@@ -120,7 +120,7 @@ class HomeScreen extends StatelessWidget {
                       height: 15,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      padding: const EdgeInsets.only(left: 30),
                       child: getScheduleText(data),
                     ),
                   ],
