@@ -37,6 +37,7 @@ dependencies:
   go_router: ^13.1.0
   flutter_svg: ^2.0.9
   provider: ^6.1.1
+  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_test:
@@ -59,18 +60,17 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-fonts:
-  - family: notosansthai
-    fonts:
-      - asset: resource/font/notosansthai_bold.ttf
-      - asset: resource/font/notosansthai_light.ttf
-      - asset: resource/font/notosansthai_medium.ttf
-      - asset: resource/font/notosansthai_regular.ttf
-      - asset: resource/font/notosansthai_semibold.ttf
-  - family: sarabun
-    fonts:
-      - asset: resource/font/sarabun_medium.ttf
-
-assets:
-  - assets/images/images/
-  - assets/images/icons/
+  fonts:
+    - family: notosansthai
+      fonts:
+        - asset: resource/font/notosansthai_bold.ttf
+        - asset: resource/font/notosansthai_light.ttf
+        - asset: resource/font/notosansthai_medium.ttf
+        - asset: resource/font/notosansthai_regular.ttf
+        - asset: resource/font/notosansthai_semibold.ttf
+    - family: sarabun
+      fonts:
+        - asset: resource/font/sarabun_medium.ttf
+  assets:
+    - assets/images/
+    - assets/icons/

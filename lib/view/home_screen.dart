@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_schedule/constants/app_constants.dart';
 import 'package:shop_schedule/constants/images.dart';
 import 'package:shop_schedule/model/shop_schedule.dart';
 import 'package:shop_schedule/view_model/shop_provider.dart';
 import 'package:shop_schedule/widgets/base_app_bar.dart';
+import 'package:shop_schedule/widgets/base_text.dart';
+import 'package:shop_schedule/widgets/covert_open_time_text.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,96 +18,64 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // String getActiveSchedule(BranchProvider branchData) {
-  //   if (!branchData.loading) {
-  //     if (branchData.data.schedule != null) {
-  //       if (branchData.data.schedule!.status.toString() == "1") {
-  //         return "เปิด";
-  //       } else {
-  //         return "ปิด";
-  //       }
-  //     } else {
-  //       return "";
-  //     }
-  //   } else {
-  //     return "";
-  //   }
-  // }
+  String getActiveSchedule(ShopSchedule data) {
+    if (data.status.toString() == "1") {
+      return "เปิด";
+    } else {
+      return "ปิด";
+    }
+  }
 
-  //  Widget getScheduleText(BranchProvider branchData) {
-  //   // this is section where we convert data in to model
-  //   if (!branchData.loading) {
-  //     if (branchData.data.schedule != null) {
-  //       //need to change this array due to key in each api u make model
-  //       // our api is not return good same result for us need to be this way
-  //       var keyArrActive = [
-  //         branchData.data.schedule!.monday.toString(),
-  //         branchData.data.schedule!.tuesday.toString(),
-  //         branchData.data.schedule!.wednesday.toString(),
-  //         branchData.data.schedule!.thursday.toString(),
-  //         branchData.data.schedule!.friday.toString(),
-  //         branchData.data.schedule!.saturday.toString(),
-  //         branchData.data.schedule!.sunday.toString()
-  //       ];
-  //       var keyArr24Hr = [
-  //         branchData.data.schedule!.monday24hours.toString(),
-  //         branchData.data.schedule!.tuesday24hours.toString(),
-  //         branchData.data.schedule!.wednesday24hours.toString(),
-  //         branchData.data.schedule!.thursday24hours.toString(),
-  //         branchData.data.schedule!.friday24hours.toString(),
-  //         branchData.data.schedule!.saturday24hours.toString(),
-  //         branchData.data.schedule!.sunday24hours.toString()
-  //       ];
-  //       var keyArrFromTime = [
-  //         branchData.data.schedule!.mondayFromtime.toString(),
-  //         branchData.data.schedule!.tuesdayFromtime.toString(),
-  //         branchData.data.schedule!.wednesdayFromtime.toString(),
-  //         branchData.data.schedule!.thursdayFromtime.toString(),
-  //         branchData.data.schedule!.fridayFromtime.toString(),
-  //         branchData.data.schedule!.saturdayFromtime.toString(),
-  //         branchData.data.schedule!.sundayFromtime.toString()
-  //       ];
-  //       var keyArrToTime = [
-  //         branchData.data.schedule!.mondayTotime.toString(),
-  //         branchData.data.schedule!.tuesdayTotime.toString(),
-  //         branchData.data.schedule!.wednesdayTotime.toString(),
-  //         branchData.data.schedule!.thursdayTotime.toString(),
-  //         branchData.data.schedule!.fridayTotime.toString(),
-  //         branchData.data.schedule!.saturdayTotime.toString(),
-  //         branchData.data.schedule!.sundayTotime.toString()
-  //       ];
+  Widget getScheduleText(ShopSchedule data) {
+    var keyArrActive = [
+      data.monday.toString(),
+      data.tuesday.toString(),
+      data.wednesday.toString(),
+      data.thursday.toString(),
+      data.friday.toString(),
+      data.saturday.toString(),
+      data.sunday.toString()
+    ];
+    var keyArr24Hr = [
+      data.monday24hours.toString(),
+      data.tuesday24hours.toString(),
+      data.wednesday24hours.toString(),
+      data.thursday24hours.toString(),
+      data.friday24hours.toString(),
+      data.saturday24hours.toString(),
+      data.sunday24hours.toString()
+    ];
+    var keyArrFromTime = [
+      data.mondayFromTime.toString(),
+      data.tuesdayFromTime.toString(),
+      data.wednesdayFromTime.toString(),
+      data.thursdayFromTime.toString(),
+      data.fridayFromTime.toString(),
+      data.saturdayFromTime.toString(),
+      data.sundayFromTime.toString()
+    ];
+    var keyArrToTime = [
+      data.mondayToTime.toString(),
+      data.tuesdayToTime.toString(),
+      data.wednesdayToTime.toString(),
+      data.thursdayToTime.toString(),
+      data.fridayToTime.toString(),
+      data.saturdayToTime.toString(),
+      data.sundayToTime.toString()
+    ];
 
-  //       if (branchData.data.schedule!.scheduleType == "24hr") {
-  //         return const BaseText(
-  //           text: "เปิดตลอด 24 ชั่วโมง",
-  //           fontWeight: FontWeight.w500,
-  //           color: Color(0xff676A6F),
-  //         );
-  //       } else {
-  //         List<OpenTime> dayList = [];
-  //         for (int i = 0; i < 7; i++) {
-  //           var each = OpenTime(dayOfWeek: i);
-  //           each.isActive = keyArrActive[i] == "1";
-  //           each.is24Hr = keyArr24Hr[i] == "1";
-  //           each.startTime = keyArrFromTime[i].substring(0, 5);
-  //           each.endTime = keyArrToTime[i].substring(0, 5);
-  //           dayList.add(each);
-  //         }
+    List<OpenTime> dayList = [];
+    for (int i = 0; i < 7; i++) {
+      var each = OpenTime(dayOfWeek: i);
+      each.isActive = keyArrActive[i] == "1";
+      each.is24Hr = keyArr24Hr[i] == "1";
+      each.startTime = keyArrFromTime[i].substring(0, 5);
+      each.endTime = keyArrToTime[i].substring(0, 5);
+      dayList.add(each);
+    }
 
-  //         return Helper().convertOpenTimeTxt(dayList);
-  //       }
-  //     }
-  //   }
-
-  //   return Container();
-  // }
-
-  Widget _customDivider() {
-    return const Divider(
-      color: Color(0xffEFEFEF),
-      indent: 15,
-      endIndent: 15,
-      height: 1,
+    return ConvertOpenTimeText(
+      dayList: dayList,
     );
   }
 
@@ -111,18 +83,53 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-          child: SizedBox(
-            width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          child: GestureDetector(
+            onTap: () => context.push("/shop_schedule_edit"),
             child: Card(
               color: Colors.white,
               surfaceTintColor: Colors.white,
-              child: Column(
-                children: [
-                  SvgPicture.asset(
-                    Images.icTime,
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          Images.icTime,
+                          width: 20,
+                          height: 20,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const BaseText(
+                          text: "เวลาเปิด - ปิด ร้านค้า",
+                          fontWeight: FontWeight.w500,
+                        ),
+                        const Spacer(),
+                        BaseText(
+                          text: getActiveSchedule(data),
+                          color: AppConstant.redColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        SvgPicture.asset(
+                          Images.icNext,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: getScheduleText(data),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -137,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: BaseAppBar(
-          titleText: "วันเวลาเปิด-ปิดร้านค้า",
+          titleText: "วันเวลาเปิด - ปิด ร้านค้า",
           isBack: false,
         ),
       ),

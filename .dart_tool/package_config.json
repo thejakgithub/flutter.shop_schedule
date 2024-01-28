@@ -68,6 +68,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "flutter_switch",
+      "rootUri": "file:///Users/swittchaisri/.pub-cache/hosted/pub.dev/flutter_switch-0.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/swittchaisri/Documents/Development/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -230,7 +236,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-01-28T06:16:00.995902Z",
+  "generated": "2024-01-28T07:02:00.978424Z",
   "generator": "pub",
   "generatorVersion": "3.2.0"
 }

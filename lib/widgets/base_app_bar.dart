@@ -10,6 +10,7 @@ class BaseAppBar extends StatelessWidget {
   final VoidCallback? onPressBack;
   final VoidCallback? onPressAdd;
   final bool isBack;
+  final String actionText;
 
   const BaseAppBar(
       {super.key,
@@ -18,7 +19,26 @@ class BaseAppBar extends StatelessWidget {
       this.onPress,
       this.onPressBack,
       this.onPressAdd,
-      this.isBack = true});
+      this.isBack = true,
+      this.actionText = ""});
+
+  List<Widget> endAction() {
+    if (actionText != "") {
+      return [
+        IconButton(
+          icon: BaseText(
+            text: actionText,
+            color: AppConstant.redColor,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+          onPressed: onPress,
+        )
+      ];
+    } else {
+      return [];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +71,7 @@ class BaseAppBar extends StatelessWidget {
                       Navigator.pop(context);
                     })
             : null,
+        actions: (actionText != "") ? endAction() : null,
       ),
     );
   }
