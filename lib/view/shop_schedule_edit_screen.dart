@@ -130,7 +130,7 @@ class _ShopScheduleEditScreenState extends State<ShopScheduleEditScreen> {
         ),
       );
     } else {
-      // Back to Home Screen
+      // Back to Home Screen and set Shop Schedule
       Provider.of<ShopProvider>(context, listen: false)
           .setShopSchedule(schedule);
       Navigator.pop(context);

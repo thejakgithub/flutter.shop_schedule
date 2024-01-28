@@ -55,7 +55,7 @@ class ConvertOpenTimeText extends StatelessWidget {
           if (listA.length == 1) {
             start = getDayTH(listA[0].dayOfWeek);
           } else {
-            start = "${getDayTH(listA[0].dayOfWeek, isShort: true)} -"
+            start = "${getDayTH(listA[0].dayOfWeek, isShort: true)} - "
                 "${getDayTH(listA[listA.length - 1].dayOfWeek, isShort: true)}";
           }
 
@@ -91,7 +91,7 @@ class ConvertOpenTimeText extends StatelessWidget {
       if (listA.length == 1) {
         start = getDayTH(listA[0].dayOfWeek);
       } else {
-        start = "${getDayTH(listA[0].dayOfWeek, isShort: true)} -"
+        start = "${getDayTH(listA[0].dayOfWeek, isShort: true)} - "
             "${getDayTH(listA[listA.length - 1].dayOfWeek, isShort: true)}";
       }
 
