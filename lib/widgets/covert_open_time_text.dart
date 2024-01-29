@@ -31,32 +31,34 @@ class ConvertOpenTimeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int sop = 0;
-    var startAndEnd = "";
-    List<OpenTime> listA = [];
+    int isActiveTemp = 0;
+    var startAndEndTemp = "";
+    List<OpenTime> dataList = [];
     List<Widget> resultList = [];
     for (int i = 0; i < dayList.length; i++) {
-      int index = dayList[i].isActive ? 1 : 0;
-      String sne = dayList[i].isActive
+      int isActive = dayList[i].isActive ? 1 : 0;
+      String startEnd = dayList[i].isActive
           ? "${dayList[i].startTime} - ${dayList[i].endTime}"
           : "ปิดทำการ";
       if (dayList[i].is24Hr && dayList[i].isActive) {
-        sne = "เปิดตลอด 24 ชั่วโมง";
+        startEnd = "เปิดตลอด 24 ชั่วโมง";
       }
 
-      if (index == sop && startAndEnd == sne) {
+      //Check same group
+      if (isActive == isActiveTemp && startAndEndTemp == startEnd) {
         //save add same group
-        listA.add(OpenTime(dayOfWeek: dayList[i].dayOfWeek, timeStr: sne));
+        dataList
+            .add(OpenTime(dayOfWeek: dayList[i].dayOfWeek, timeStr: startEnd));
       } else {
         //not same start new group
-        if (listA.isNotEmpty) {
+        if (dataList.isNotEmpty) {
           //draw time first
           String start = "";
-          if (listA.length == 1) {
-            start = getDayTH(listA[0].dayOfWeek);
+          if (dataList.length == 1) {
+            start = getDayTH(dataList[0].dayOfWeek);
           } else {
-            start = "${getDayTH(listA[0].dayOfWeek, isShort: true)} - "
-                "${getDayTH(listA[listA.length - 1].dayOfWeek, isShort: true)}";
+            start = "${getDayTH(dataList[0].dayOfWeek, isShort: true)} - "
+                "${getDayTH(dataList[dataList.length - 1].dayOfWeek, isShort: true)}";
           }
 
           resultList.add(Row(
@@ -70,7 +72,7 @@ class ConvertOpenTimeText extends StatelessWidget {
                   )),
               Expanded(
                 child: BaseText(
-                  text: listA[0].timeStr,
+                  text: dataList[0].timeStr,
                   color: const Color(0xff676A6F),
                 ),
               ),
@@ -78,21 +80,21 @@ class ConvertOpenTimeText extends StatelessWidget {
           ));
         }
 
-        listA = [];
-        sop = index;
-        startAndEnd = sne;
-        listA.add(
-            OpenTime(dayOfWeek: dayList[i].dayOfWeek, timeStr: startAndEnd));
+        dataList = [];
+        isActiveTemp = isActive;
+        startAndEndTemp = startEnd;
+        dataList.add(OpenTime(
+            dayOfWeek: dayList[i].dayOfWeek, timeStr: startAndEndTemp));
       }
     }
-    if (listA.isNotEmpty) {
+    if (dataList.isNotEmpty) {
       //draw left
       String start = "";
-      if (listA.length == 1) {
-        start = getDayTH(listA[0].dayOfWeek);
+      if (dataList.length == 1) {
+        start = getDayTH(dataList[0].dayOfWeek);
       } else {
-        start = "${getDayTH(listA[0].dayOfWeek, isShort: true)} - "
-            "${getDayTH(listA[listA.length - 1].dayOfWeek, isShort: true)}";
+        start = "${getDayTH(dataList[0].dayOfWeek, isShort: true)} - "
+            "${getDayTH(dataList[dataList.length - 1].dayOfWeek, isShort: true)}";
       }
 
       resultList.add(Row(
@@ -106,7 +108,7 @@ class ConvertOpenTimeText extends StatelessWidget {
               )),
           Expanded(
             child: BaseText(
-              text: listA[0].timeStr,
+              text: dataList[0].timeStr,
               color: const Color(0xff676A6F),
             ),
           ),
