@@ -435,6 +435,16 @@ class _ShopScheduleEditScreenState extends State<ShopScheduleEditScreen> {
                                           initialTime:
                                               getTimeOfDayFromTime(data["day"]),
                                           context: context,
+                                          builder: (BuildContext context,
+                                              Widget? child) {
+                                            return MediaQuery(
+                                              data: MediaQuery.of(context)
+                                                  .copyWith(
+                                                      alwaysUse24HourFormat:
+                                                          true),
+                                              child: child!,
+                                            );
+                                          },
                                         );
                                         setState(() {
                                           if (data["day"] == "วันจันทร์") {
