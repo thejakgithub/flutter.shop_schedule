@@ -257,7 +257,47 @@ class _ShopScheduleEditScreenState extends State<ShopScheduleEditScreen> {
     return TimeOfDay(hour: hr, minute: m);
   }
 
-  _cardOpenShop() {
+  void dayOpen(day, isCheck) {
+    setState(() {
+      if (day == "วันจันทร์") {
+        schedule.monday = isCheck ? "1" : "0";
+      } else if (day == "วันอังคาร") {
+        schedule.tuesday = isCheck ? "1" : "0";
+      } else if (day == "วันพุธ") {
+        schedule.wednesday = isCheck ? "1" : "0";
+      } else if (day == "วันพฤหัสบดี") {
+        schedule.thursday = isCheck ? "1" : "0";
+      } else if (day == "วันศุกร์") {
+        schedule.friday = isCheck ? "1" : "0";
+      } else if (day == "วันเสาร์") {
+        schedule.saturday = isCheck ? "1" : "0";
+      } else if (day == "วันอาทิตย์") {
+        schedule.sunday = isCheck ? "1" : "0";
+      }
+    });
+  }
+
+  void open24Hr(day, isCheck) {
+    setState(() {
+      if (day == "วันจันทร์") {
+        schedule.monday24hours = isCheck ? "1" : "0";
+      } else if (day == "วันอังคาร") {
+        schedule.tuesday24hours = isCheck ? "1" : "0";
+      } else if (day == "วันพุธ") {
+        schedule.wednesday24hours = isCheck ? "1" : "0";
+      } else if (day == "วันพฤหัสบดี") {
+        schedule.thursday24hours = isCheck ? "1" : "0";
+      } else if (day == "วันศุกร์") {
+        schedule.friday24hours = isCheck ? "1" : "0";
+      } else if (day == "วันเสาร์") {
+        schedule.saturday24hours = isCheck ? "1" : "0";
+      } else if (day == "วันอาทิตย์") {
+        schedule.sunday24hours = isCheck ? "1" : "0";
+      }
+    });
+  }
+
+  Widget _cardOpenShop() {
     return Card(
       color: Colors.white,
       surfaceTintColor: Colors.white,
@@ -281,6 +321,75 @@ class _ShopScheduleEditScreenState extends State<ShopScheduleEditScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> dayFromTime(day) async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      initialTime: getTimeOfDayFromTime(day),
+      context: context,
+      builder: (BuildContext context, Widget? child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child!,
+        );
+      },
+    );
+    setState(() {
+      if (day == "วันจันทร์") {
+        schedule.mondayFromTime =
+            schedule.mondayFromTime = pickedTime!.format(context);
+      } else if (day == "วันอังคาร") {
+        schedule.tuesdayFromTime =
+            schedule.tuesdayFromTime = pickedTime!.format(context);
+      } else if (day == "วันพุธ") {
+        schedule.wednesdayFromTime =
+            schedule.wednesdayFromTime = pickedTime!.format(context);
+      } else if (day == "วันพฤหัสบดี") {
+        schedule.thursdayFromTime =
+            schedule.thursdayFromTime = pickedTime!.format(context);
+      } else if (day == "วันศุกร์") {
+        schedule.fridayFromTime =
+            schedule.fridayFromTime = pickedTime!.format(context);
+      } else if (day == "วันเสาร์") {
+        schedule.saturdayFromTime =
+            schedule.saturdayFromTime = pickedTime!.format(context);
+      } else if (day == "วันอาทิตย์") {
+        schedule.sundayFromTime =
+            schedule.sundayFromTime = pickedTime!.format(context);
+      }
+    });
+  }
+
+  Future<void> dayToTime(day) async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      initialTime: getTimeOfDayToTime(day),
+      context: context,
+    );
+
+    setState(() {
+      if (day == "วันจันทร์") {
+        schedule.mondayToTime =
+            schedule.mondayToTime = pickedTime!.format(context);
+      } else if (day == "วันอังคาร") {
+        schedule.tuesdayToTime =
+            schedule.tuesdayToTime = pickedTime!.format(context);
+      } else if (day == "วันพุธ") {
+        schedule.wednesdayToTime =
+            schedule.wednesdayToTime = pickedTime!.format(context);
+      } else if (day == "วันพฤหัสบดี") {
+        schedule.thursdayToTime =
+            schedule.thursdayToTime = pickedTime!.format(context);
+      } else if (day == "วันศุกร์") {
+        schedule.fridayToTime =
+            schedule.fridayToTime = pickedTime!.format(context);
+      } else if (day == "วันเสาร์") {
+        schedule.saturdayToTime =
+            schedule.saturdayToTime = pickedTime!.format(context);
+      } else if (day == "วันอาทิตย์") {
+        schedule.sundayToTime =
+            schedule.sundayToTime = pickedTime!.format(context);
+      }
+    });
   }
 
   Widget _cardScheduleShop() {
@@ -355,21 +464,7 @@ class _ShopScheduleEditScreenState extends State<ShopScheduleEditScreen> {
                       color: AppConstant.greenColor,
                       onCheck: (isCheck) {
                         setState(() {
-                          if (data["day"] == "วันจันทร์") {
-                            schedule.monday = isCheck ? "1" : "0";
-                          } else if (data["day"] == "วันอังคาร") {
-                            schedule.tuesday = isCheck ? "1" : "0";
-                          } else if (data["day"] == "วันพุธ") {
-                            schedule.wednesday = isCheck ? "1" : "0";
-                          } else if (data["day"] == "วันพฤหัสบดี") {
-                            schedule.thursday = isCheck ? "1" : "0";
-                          } else if (data["day"] == "วันศุกร์") {
-                            schedule.friday = isCheck ? "1" : "0";
-                          } else if (data["day"] == "วันเสาร์") {
-                            schedule.saturday = isCheck ? "1" : "0";
-                          } else if (data["day"] == "วันอาทิตย์") {
-                            schedule.sunday = isCheck ? "1" : "0";
-                          }
+                          dayOpen(data["day"], isCheck);
                         });
                       },
                     ),
@@ -386,23 +481,7 @@ class _ShopScheduleEditScreenState extends State<ShopScheduleEditScreen> {
                           fontSize: 16,
                           value: getChkVal(data["day"]),
                           onChanged: (isCheck) {
-                            setState(() {
-                              if (data["day"] == "วันจันทร์") {
-                                schedule.monday24hours = isCheck ? "1" : "0";
-                              } else if (data["day"] == "วันอังคาร") {
-                                schedule.tuesday24hours = isCheck ? "1" : "0";
-                              } else if (data["day"] == "วันพุธ") {
-                                schedule.wednesday24hours = isCheck ? "1" : "0";
-                              } else if (data["day"] == "วันพฤหัสบดี") {
-                                schedule.thursday24hours = isCheck ? "1" : "0";
-                              } else if (data["day"] == "วันศุกร์") {
-                                schedule.friday24hours = isCheck ? "1" : "0";
-                              } else if (data["day"] == "วันเสาร์") {
-                                schedule.saturday24hours = isCheck ? "1" : "0";
-                              } else if (data["day"] == "วันอาทิตย์") {
-                                schedule.sunday24hours = isCheck ? "1" : "0";
-                              }
-                            });
+                            open24Hr(data["day"], isCheck);
                           },
                         ),
                       ),
@@ -430,58 +509,7 @@ class _ShopScheduleEditScreenState extends State<ShopScheduleEditScreen> {
                                             BorderRadius.circular(10.0),
                                       ),
                                       onTap: () async {
-                                        TimeOfDay? pickedTime =
-                                            await showTimePicker(
-                                          initialTime:
-                                              getTimeOfDayFromTime(data["day"]),
-                                          context: context,
-                                          builder: (BuildContext context,
-                                              Widget? child) {
-                                            return MediaQuery(
-                                              data: MediaQuery.of(context)
-                                                  .copyWith(
-                                                      alwaysUse24HourFormat:
-                                                          true),
-                                              child: child!,
-                                            );
-                                          },
-                                        );
-                                        setState(() {
-                                          if (data["day"] == "วันจันทร์") {
-                                            schedule.mondayFromTime =
-                                                schedule.mondayFromTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] ==
-                                              "วันอังคาร") {
-                                            schedule.tuesdayFromTime =
-                                                schedule.tuesdayFromTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] == "วันพุธ") {
-                                            schedule.wednesdayFromTime =
-                                                schedule.wednesdayFromTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] ==
-                                              "วันพฤหัสบดี") {
-                                            schedule.thursdayFromTime =
-                                                schedule.thursdayFromTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] ==
-                                              "วันศุกร์") {
-                                            schedule.fridayFromTime =
-                                                schedule.fridayFromTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] ==
-                                              "วันเสาร์") {
-                                            schedule.saturdayFromTime =
-                                                schedule.saturdayFromTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] ==
-                                              "วันอาทิตย์") {
-                                            schedule.sundayFromTime =
-                                                schedule.sundayFromTime =
-                                                    pickedTime!.format(context);
-                                          }
-                                        });
+                                        dayFromTime(data["day"]);
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
@@ -546,49 +574,7 @@ class _ShopScheduleEditScreenState extends State<ShopScheduleEditScreen> {
                                             BorderRadius.circular(10.0),
                                       ),
                                       onTap: () async {
-                                        TimeOfDay? pickedTime =
-                                            await showTimePicker(
-                                          initialTime:
-                                              getTimeOfDayToTime(data["day"]),
-                                          context: context,
-                                        );
-
-                                        setState(() {
-                                          if (data["day"] == "วันจันทร์") {
-                                            schedule.mondayToTime =
-                                                schedule.mondayToTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] ==
-                                              "วันอังคาร") {
-                                            schedule.tuesdayToTime =
-                                                schedule.tuesdayToTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] == "วันพุธ") {
-                                            schedule.wednesdayToTime =
-                                                schedule.wednesdayToTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] ==
-                                              "วันพฤหัสบดี") {
-                                            schedule.thursdayToTime =
-                                                schedule.thursdayToTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] ==
-                                              "วันศุกร์") {
-                                            schedule.fridayToTime =
-                                                schedule.fridayToTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] ==
-                                              "วันเสาร์") {
-                                            schedule.saturdayToTime =
-                                                schedule.saturdayToTime =
-                                                    pickedTime!.format(context);
-                                          } else if (data["day"] ==
-                                              "วันอาทิตย์") {
-                                            schedule.sundayToTime =
-                                                schedule.sundayToTime =
-                                                    pickedTime!.format(context);
-                                          }
-                                        });
+                                        dayToTime(data["day"]);
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
