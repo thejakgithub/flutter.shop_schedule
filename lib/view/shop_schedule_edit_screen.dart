@@ -297,32 +297,6 @@ class _ShopScheduleEditScreenState extends State<ShopScheduleEditScreen> {
     });
   }
 
-  Widget _cardOpenShop() {
-    return Card(
-      color: Colors.white,
-      surfaceTintColor: Colors.white,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 50,
-            child: Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: BaseInputSwitch(
-                  title: "เปิด - ปิด ทำการร้านค้า",
-                  isCheck: schedule.status == "1" ? true : false,
-                  color: AppConstant.greenColor,
-                  onCheck: (isCheck) {
-                    setState(() {
-                      schedule.status = isCheck ? "1" : "0";
-                    });
-                  },
-                )),
-          ),
-        ],
-      ),
-    );
-  }
-
   Future<void> dayFromTime(day) async {
     TimeOfDay? pickedTime = await showTimePicker(
       initialTime: getTimeOfDayFromTime(day),
@@ -390,6 +364,33 @@ class _ShopScheduleEditScreenState extends State<ShopScheduleEditScreen> {
             schedule.sundayToTime = pickedTime!.format(context);
       }
     });
+  }
+
+  // Widget
+  Widget _cardOpenShop() {
+    return Card(
+      color: Colors.white,
+      surfaceTintColor: Colors.white,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50,
+            child: Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: BaseInputSwitch(
+                  title: "เปิด - ปิด ทำการร้านค้า",
+                  isCheck: schedule.status == "1" ? true : false,
+                  color: AppConstant.greenColor,
+                  onCheck: (isCheck) {
+                    setState(() {
+                      schedule.status = isCheck ? "1" : "0";
+                    });
+                  },
+                )),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _cardScheduleShop() {
